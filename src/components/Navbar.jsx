@@ -159,7 +159,7 @@ const Navbar = () => {
             </SearchContainer>
           </Left>
           <Center>
-            <Logo src="../../public/logo.jpg" />
+            <Logo src="../../logo.jpg" />
             <LogoText>WishKart</LogoText>
           </Center>
           <Right>
