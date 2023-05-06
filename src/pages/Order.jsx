@@ -30,7 +30,7 @@ const TopButton = styled.button`
 `;
 
 const TopText = styled.span`
-  margin: 15px 0px;
+  margin: 15px 5px;
   border: solid 1px gray;
   border-radius: 5px;
   padding: 3px;
@@ -144,6 +144,13 @@ const Order = () => {
               <Info>
                 <Top>
                   <TopText>Order Id: {order._id}</TopText>
+                  {order.createdAt && (
+                    <TopText>
+                      Order Date: {new Date(order.createdAt).getDay()}-
+                      {new Date(order.createdAt).getMonth()}-
+                      {new Date(order.createdAt).getFullYear()}
+                    </TopText>
+                  )}
                 </Top>
                 {order.products.map((product, index) => (
                   <Product key={index}>
