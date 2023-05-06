@@ -4,6 +4,7 @@ import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { publicRequest } from "../requestMethods";
 import { Link } from "react-router-dom";
+import ScreenLoader from "../utils/ScreenLoader";
 
 const Container = styled.div`
   width: 100%;
@@ -11,7 +12,6 @@ const Container = styled.div`
   display: flex;
   position: relative;
   overflow: hidden;
-  margin: 30px 0px;
 `;
 
 const Arrow = styled.div`
@@ -29,11 +29,13 @@ const Arrow = styled.div`
   left: ${(props) => props.direction === "left" && "10px"};
   right: ${(props) => props.direction === "right" && "10px"};
   cursor: pointer;
+  opacity: 0.7;
 `;
 
 const Wrapper = styled.div`
   height: 100%;
   display: flex;
+  transition: all 1.5s ease;
   transform: translateX(${(props) => props.slide * -100}vw);
 `;
 
@@ -46,12 +48,18 @@ const Slide = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  height: 100%;
+  height: 90%;
+  width: 90%;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
+
 const Image = styled.img`
-  height: 80%;
-  width: 70%;
+  border-radius: 2%;
+  height: 70%;
+  width: 50%;
 `;
 
 const InfoContainer = styled.div`
@@ -59,7 +67,7 @@ const InfoContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 50px;
+  font-size: 200%;
 `;
 
 const Description = styled.p`
@@ -80,6 +88,7 @@ const Button = styled.button`
 const Slider = () => {
   const [slide, setSlide] = useState(0);
   const [data, setData] = useState([]);
+  const [screenLoader, setScreenLoader] = useState(true);
 
   const handleClick = (direction) => {
     if (direction === "left") setSlide(slide > 0 ? slide - 1 : 2);
@@ -95,12 +104,19 @@ const Slider = () => {
             ? await publicRequest.get("/products")
             : await publicRequest.get("/category");
         setData(response.data);
+        setScreenLoader(false);
       } catch (err) {
         console.log(err);
+        console.log('the error has come')
+        setScreenLoader(false);
       }
     };
     getSliderData();
   }, []);
+
+  useEffect(() => {
+    data.length === 0 ? setScreenLoader(true) : setScreenLoader(false);
+  }, [data]);
 
   return (
     <>
@@ -130,6 +146,7 @@ const Slider = () => {
           <ArrowRightOutlinedIcon />
         </Arrow>
       </Container>
+      <ScreenLoader open={screenLoader} />
     </>
   );
 };

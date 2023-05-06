@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeProduct, modifyProductQuantity } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import Divider from "@mui/material/Divider";
+import ScreenLoader from "../utils/ScreenLoader";
 
 const Container = styled.div``;
 
@@ -108,6 +109,7 @@ const Order = () => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.currentUser);
   const [orderData, setOrderData] = useState([]);
+  const [screenLoader, setScreenLoader] = useState(true);
 
   const getOrderList = async () => {
     try {
@@ -117,8 +119,10 @@ const Order = () => {
         },
       });
       setOrderData(res.data.reverse());
+      setScreenLoader(false);
     } catch (err) {
       console.log(err);
+      setScreenLoader(false);
     }
   };
 
@@ -167,6 +171,7 @@ const Order = () => {
           ))}
         </Bottom>
       </Wrapper>
+      <ScreenLoader open={screenLoader} />
     </Container>
   );
 };

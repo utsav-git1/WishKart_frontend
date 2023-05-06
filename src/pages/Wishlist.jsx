@@ -7,6 +7,7 @@ import { removeProduct, modifyProductQuantity } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import Divider from "@mui/material/Divider";
 import { Link } from "react-router-dom";
+import ScreenLoader from "../utils/ScreenLoader";
 
 const Container = styled.div``;
 
@@ -69,14 +70,17 @@ const Wishlist = () => {
   const wishlist = useSelector((state) => state.wishlist);
   const [wishlistData, setWishlistData] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
+  const [screenLoader, setScreenLoader] = useState(true);
 
   useEffect(() => {
     const getAllProducts = async (req, res) => {
       try {
         const res = await publicRequest.get("/products");
         setAllProducts(res.data);
+        setScreenLoader(false);
       } catch (err) {
         console.log(err);
+        setScreenLoader(false);
       }
     };
     getAllProducts();
@@ -117,6 +121,7 @@ const Wishlist = () => {
           ))}
         </Bottom>
       </Wrapper>
+      <ScreenLoader open={screenLoader} />
     </Container>
   );
 };

@@ -4,16 +4,17 @@ import styled from "styled-components";
 import Divider from "@mui/material/Divider";
 
 const Container = styled.div`
-  margin: 3px;
+  margin: 10px;
   position: relative;
-  height: 600px;
-  width: 600px;
-  padding: 0px 30px;
+  height: 400px;
+  width: 400px;
+  display: flex;
+  justify-content: center;
 `;
 
 const Info = styled.div`
-  width: 70%;
-  height: 70%;
+  height: 100%;
+  width: 100%;
   position: absolute;
   top: 0;
   left: 0;
@@ -23,9 +24,18 @@ const Info = styled.div`
   justify-content: center;
 `;
 
+const ImageContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Image = styled.img`
-  height: 70%;
-  width: 70%;
+  border-radius: 2%;
+  height: 90%;
+  width: 90%;
   object-fit: cover;
 `;
 
@@ -35,6 +45,7 @@ const Title = styled.h2`
 
 const Button = styled.button`
   border: none;
+  border-radius: 5%;
   color: gray;
   background-color: white;
   cursor: pointer;
@@ -46,15 +57,14 @@ const CategoryItem = (props) => {
   return (
     <Container>
       <Link to={`/products/${data.category}`}>
-        <Image src={data.image} />
+        <ImageContainer>
+          <Image src={data.image} />
+        </ImageContainer>
         <Info>
           <Title>{data.title}</Title>
           <Button>Shop Now</Button>
         </Info>
       </Link>
-      <Divider sx={{ margin: "10px 0px", width: "70%", color: "gray" }}>
-        *~*
-      </Divider>
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import { Add, Delete, Remove } from "@mui/icons-material";
@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import { publicRequest } from "../requestMethods";
 import FullScreenContainer from "../utils/FullScreenContainer";
 import { saveCart } from "../redux/apiCalls";
+import ScreenLoader from "../utils/ScreenLoader";
+import AlertDialog from "../utils/Dialog";
 
 const Container = styled.div``;
 
@@ -114,6 +116,9 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
+  const [screenLoader, setScreenLoader] = useState(false);
+  const [successFlag, setSuccessFlag] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleDelete = (index, product) => {
     let id = product._id;
@@ -145,12 +150,20 @@ const Cart = () => {
         setTimeout(() => {
           dispatch(emptyCart({ id: cart.id }));
         }, 3000);
+        setScreenLoader(false);
       } catch (err) {
         console.log(err);
+        setScreenLoader(false);
       }
     };
 
     placeOrder(cartData);
+    setScreenLoader(true);
+    setTimeout(() => {
+      setMessage("Congratulations! Your Order is Successfully placed");
+      setScreenLoader(false);
+      setSuccessFlag(true);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -166,11 +179,9 @@ const Cart = () => {
           <Link to="/">
             <TopButton>Continue Shopping!</TopButton>
           </Link>
-          <Link to="/order">
-            {cart?.products.length > 0 && (
-              <TopButton onClick={handleOrder}>Place Order</TopButton>
-            )}
-          </Link>
+          {cart?.products.length > 0 && (
+            <TopButton onClick={handleOrder}>Place Order</TopButton>
+          )}
         </Top>
         {cart?.products.length > 0 ? (
           <Bottom>
@@ -211,6 +222,10 @@ const Cart = () => {
           <FullScreenContainer message="Oops! Your Cart is Empty" />
         )}
       </Wrapper>
+      <ScreenLoader open={screenLoader} />
+      {successFlag && (
+        <AlertDialog setWarning={setSuccessFlag} message={message} />
+      )}
     </Container>
   );
 };

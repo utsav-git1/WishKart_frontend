@@ -27,25 +27,33 @@ const Info = styled.div`
 const Container = styled.div`
   position: relative;
   margin: 3px;
-  background-color: lightblue;
   height: 50vh;
   width: 30vw;
-  margin: 20px;
+  margin: 00px;
 
   &:hover ${Info} {
     opacity: 1;
   }
 `;
 
-const Image = styled.img`
+const ImageContainer = styled.div`
   height: 100%;
   width: 100%;
-  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Image = styled.img`
+  height: 100%;
+  width: 80%;
 `;
 
 const Icon = styled.div`
-  width: 40px;
-  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
+  width: 15%;
+  height: 15%;
   border-radius: 50%;
   background-color: white;
   display: flex;
@@ -62,8 +70,9 @@ const Icon = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 25px;
-  margin: 2px 1px;
+  font-size: 150%;
+  text-align: center;
+  margin-top: 5px;
 `;
 
 const Product = ({ product }) => {
@@ -121,7 +130,9 @@ const Product = ({ product }) => {
 
   return (
     <Container>
-      <Image src={product.image} />
+      <ImageContainer>
+        <Image src={product.image} />
+      </ImageContainer>
       <Info>
         <Icon>
           <ShoppingCartOutlinedIcon onClick={handleClickCart} />

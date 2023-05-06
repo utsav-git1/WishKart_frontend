@@ -27,34 +27,34 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-  height: 50vh;
-  width: 70%;
-  object-fit: cover;
+  height: 100%;
+  width: 90%;
 `;
 
 const InfoContainer = styled.div`
   flex: 1;
-  padding: 50px;
+  padding: 5%;
   border-left: solid 1px lightgray;
 `;
 
 const Title = styled.h1`
   font-weight: 200;
-  font-size: 50px;
+  font-size: 150%;
 `;
 
 const Description = styled.div`
-  margin: 20px 0px;
+  margin: 5% 0px;
   letter-spacing: 2px;
+  font-size: 100%;
 `;
 
 const Price = styled.div`
-  font-size: 25px;
+  font-size: 120%;
 `;
 
 const FilterContainer = styled.div`
   width: 50%;
-  margin: 20px 0px;
+  margin: 5% 0px;
   display: flex;
   justify-content: space-between;
 `;
@@ -63,13 +63,13 @@ const Filter = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 30%;
 `;
 
 const FilterTitle = styled.div`
   font-weight: 100;
-  font-size: 20px;
-  margin-right: 5px;
+  font-size: 100%;
+  margin-right: 5%;
 `;
 
 const FilterColor = styled.div`
@@ -83,7 +83,7 @@ const FilterColor = styled.div`
 `;
 
 const FilterSize = styled.select`
-  padding: 5px;
+  padding: 3%;
 `;
 
 const FilterSizeOption = styled.option``;
@@ -112,9 +112,10 @@ const Amount = styled.span`
 `;
 
 const Button = styled.button`
-  padding: 10px;
+  padding: 5%;
   border-radius: 5px;
   background-color: white;
+  width: 120px;
   color: teal;
   font-size: 15px;
   border: 2px grey solid;
@@ -157,6 +158,12 @@ const Product = () => {
     if (user == null) {
       setWarning(true);
       setMessage("Please Sign In to add items to Cart");
+    } else if (size == "") {
+      setWarning(true);
+      setMessage("Please Select a Size!");
+    } else if (color == "") {
+      setWarning(true);
+      setMessage("Please Select a Color!");
     } else {
       let cartProduct = { ...product };
       cartProduct.color = color;

@@ -5,6 +5,7 @@ import FullScreenContainer from "../utils/FullScreenContainer";
 import { publicRequest } from "../requestMethods";
 import { useDispatch } from "react-redux";
 import { setFilterData } from "../redux/FilterData";
+import ScreenLoader from "../utils/ScreenLoader";
 
 const Container = styled.div`
   display: flex;
@@ -16,16 +17,15 @@ const ProductTile = styled.div`
   height: 100%;
   width: 100%;
   margin: 50px;
-  border: solid 0.5px lightgray;
   display: flex;
   justify-content: center;
 `;
 
 const GridContainer = styled.div`
-  height: 400px;
-  width: 400px;
+  height: 100%;
+  width: 100%;
   display: grid;
-  grid-template-columns: 500px 500px;
+  grid-template-columns: 30vw 40vw;
   column-gap: 180px;
   row-gap: 50px;
 `;
@@ -37,6 +37,7 @@ const Products = ({ category, filters, sort }) => {
     color: [],
     size: [],
   });
+  const [screenLoader, setScreenLoader] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -49,8 +50,11 @@ const Products = ({ category, filters, sort }) => {
             )
           : await publicRequest.get(`/products`);
         setProducts(res.data);
+        setScreenLoader(false);
       } catch (err) {
         console.log(err);
+        console.log('error in prod')
+        setScreenLoader(false);
       }
     };
     getProducts();
@@ -101,7 +105,10 @@ const Products = ({ category, filters, sort }) => {
   }, [productFilterData]);
 
   return products.length === 0 ? (
-    <FullScreenContainer message={`Oops No Search Results for ${category}`} />
+    <>
+      <FullScreenContainer message={`Oops No Search Results for ${category}`} />
+      <ScreenLoader open={screenLoader} />
+    </>
   ) : (
     <Container>
       <GridContainer>
