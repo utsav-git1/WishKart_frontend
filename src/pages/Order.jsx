@@ -21,7 +21,7 @@ const Title = styled.h1`
 const Top = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 `;
 
 const TopButton = styled.button`
@@ -30,10 +30,11 @@ const TopButton = styled.button`
 `;
 
 const TopText = styled.span`
-  margin: 15px 5px;
+  margin-bottom: 5%;
+  margin-right: 5%;
   border: solid 1px gray;
   border-radius: 5px;
-  padding: 3px;
+  padding: 1%;
 `;
 
 const Bottom = styled.div`
@@ -146,8 +147,8 @@ const Order = () => {
                   <TopText>Order Id: {order._id}</TopText>
                   {order.createdAt && (
                     <TopText>
-                      Order Date: {new Date(order.createdAt).getDay()}-
-                      {new Date(order.createdAt).getMonth()}-
+                       Date: {new Date(order.createdAt).getDay()}/
+                      {new Date(order.createdAt).getMonth() + 1}/
                       {new Date(order.createdAt).getFullYear()}
                     </TopText>
                   )}
