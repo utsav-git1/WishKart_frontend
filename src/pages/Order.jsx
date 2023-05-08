@@ -147,7 +147,7 @@ const Order = () => {
                   <TopText>Order Id: {order._id}</TopText>
                   {order.createdAt && (
                     <TopText>
-                       Date: {new Date(order.createdAt).getDay()}/
+                       Date: {new Date(order.createdAt).getDate()}/
                       {new Date(order.createdAt).getMonth() + 1}/
                       {new Date(order.createdAt).getFullYear()}
                     </TopText>
