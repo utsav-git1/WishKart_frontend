@@ -34,6 +34,9 @@ const Title = styled.div`
 const Form = styled.form``;
 
 const Input = styled.input`
+  border: none;
+  border-bottom: solid 2px;
+  outline: none;
   margin: 5px;
   padding: 5px;
 `;
@@ -127,23 +130,23 @@ const Register = () => {
         <Title>Register New User!</Title>
         <Form>
           <Input
-            placeholder="First Name"
+            placeholder="First Name*"
             required={true}
             onChange={(event) => setFirstName(event.target.value)}
             style={{ borderColor: firstName.trim() == "" ? "red" : "black" }}
           />
           <Input
-            placeholder="Last Name"
+            placeholder="Last Name*"
             onChange={(event) => setLastName(event.target.value)}
             style={{ borderColor: lastName.trim() == "" ? "red" : "black" }}
           />
           <Input
-            placeholder="User Name"
+            placeholder="User Name*"
             onChange={(event) => setUserName(event.target.value)}
             style={{ borderColor: userName.trim() == "" ? "red" : "black" }}
           />
           <Input
-            placeholder="Email"
+            placeholder="Email*"
             onChange={(event) => setEmail(event.target.value)}
             style={{ borderColor: email.trim() == "" ? "red" : "black" }}
           />
