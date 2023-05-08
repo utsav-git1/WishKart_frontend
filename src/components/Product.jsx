@@ -47,6 +47,8 @@ const ImageContainer = styled.div`
 const Image = styled.img`
   height: 100%;
   width: 80%;
+  min-height: 400px;
+  min-width: 300px;
 `;
 
 const Icon = styled.div`

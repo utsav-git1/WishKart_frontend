@@ -5,8 +5,8 @@ import { publicRequest } from "../requestMethods";
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
-  padding: 20px;
+  justify-content: space-between;
+  padding: 4%;
 `;
 
 const Categories = () => {

@@ -20,7 +20,7 @@ const Home = () => {
             borderRadius: "5px",
             width: "150px",
             padding: "15px",
-            margin: "0px 90px",
+            margin: "20px 11%",
             color: "grey",
             background: "lightblue",
             cursor: "pointer",

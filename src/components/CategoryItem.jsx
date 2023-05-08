@@ -36,6 +36,8 @@ const Image = styled.img`
   border-radius: 2%;
   height: 90%;
   width: 90%;
+  min-height: 400px;
+  min-width: 200px;
   object-fit: cover;
 `;
 

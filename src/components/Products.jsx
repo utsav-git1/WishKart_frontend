@@ -25,7 +25,7 @@ const GridContainer = styled.div`
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 30vw 40vw;
+  grid-template-columns: 40vw 40vw;
   column-gap: 180px;
   row-gap: 50px;
 `;
@@ -53,7 +53,6 @@ const Products = ({ category, filters, sort }) => {
         setScreenLoader(false);
       } catch (err) {
         console.log(err);
-        console.log('error in prod')
         setScreenLoader(false);
       }
     };

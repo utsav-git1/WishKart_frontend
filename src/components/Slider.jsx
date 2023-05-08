@@ -60,6 +60,7 @@ const Image = styled.img`
   border-radius: 2%;
   height: 70%;
   width: 50%;
+  min-width: 250px;
 `;
 
 const InfoContainer = styled.div`
@@ -107,7 +108,6 @@ const Slider = () => {
         setScreenLoader(false);
       } catch (err) {
         console.log(err);
-        console.log('the error has come')
         setScreenLoader(false);
       }
     };
