@@ -4,6 +4,7 @@ import { login } from "../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 
 const Container = styled.div`
   height: 100vh;
@@ -37,34 +38,15 @@ const Input = styled.input`
   padding: 5px;
 `;
 
-const Button = styled.button`
-  height: 30px;
-  width: 100px;
-  margin: 20px 5px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-
-  &:disabled {
-    color: white;
-    background-color: grey;
-    cursor: not-allowed;
-  }
-`;
-
 const Error = styled.div`
   color: red;
+  margin: 5px;
 `;
 
 const Register = styled.div`
   color: blue;
   text-decoration: underline;
   font-size: 15px;
-`;
-
-const Loader = styled.div`
-  height: 40px;
-  width: 100px;
 `;
 
 const Login = () => {
@@ -88,16 +70,19 @@ const Login = () => {
             onChange={() => setUsername(event.target.value)}
           />
           <Input
-            placeholder="Password" password
+            placeholder="Password"
+            password
             onChange={() => setPassword(event.target.value)}
           />
-          {error && <Error>{response}</Error>}
-          <Loader>
-            {isFetching && <CircularProgress color="secondary" />}
-          </Loader>
-          <Button onClick={handleClick} disabled={isFetching}>
+          <LoadingButton
+            loading={isFetching}
+            onClick={handleClick}
+            variant="outlined"
+            sx={{ color: "black", background: "teal", margin: "5px" }}
+          >
             Login
-          </Button>
+          </LoadingButton>
+          {error && <Error>{response}</Error>}
           <Link to="/register">
             <Register>New User! Click to Register</Register>
           </Link>

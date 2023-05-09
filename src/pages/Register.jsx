@@ -151,7 +151,7 @@ const Register = () => {
             style={{ borderColor: email.trim() == "" ? "red" : "black" }}
           />
           <Input
-            placeholder="Password"
+            placeholder="Password*"
             onChange={(event) => setPassword(event.target.value)}
             style={{ borderColor: password.trim() == "" ? "red" : "black" }}
           />
