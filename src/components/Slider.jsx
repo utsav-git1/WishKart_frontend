@@ -16,6 +16,7 @@ const Container = styled.div`
   @media screen and (min-width: 300px) and (max-width: 750px) {
     width: 200%;
   }
+  
 `;
 
 const Arrow = styled.div`
