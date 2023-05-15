@@ -76,7 +76,7 @@ const Icon = styled.div`
 const Title = styled.div`
   font-size: 150%;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 40px;
 `;
 
 const Product = ({ product }) => {

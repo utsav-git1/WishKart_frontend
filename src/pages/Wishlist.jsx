@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
-
 import { useDispatch, useSelector } from "react-redux";
-import { removeProduct, modifyProductQuantity } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import Divider from "@mui/material/Divider";
 import { Link } from "react-router-dom";
-import ScreenLoader from "../utils/ScreenLoader";
+import WishlistSkeleton from "../utils/SkeletonLoaders/WishlistSkeleton";
 
 const Container = styled.div``;
 
@@ -99,29 +97,30 @@ const Wishlist = () => {
       <Wrapper>
         <Title>Wishlist</Title>
         <Bottom>
-          {wishlistData.map((item, index) => (
-            <OrderContainer key={index}>
-              <Info>
-                <Product>
-                  <ProductDetail>
-                    <Image src={item.image} />
-                    <Details>
-                      <Link
-                        to={`/product/${item._id}`}
-                        style={{ textDecoration: "none", color: "black" }}
-                      >
-                        <ProductName>{item.title}</ProductName>
-                      </Link>
-                    </Details>
-                  </ProductDetail>
-                </Product>
-              </Info>
-              <Divider sx={{ color: "gray" }}></Divider>
-            </OrderContainer>
-          ))}
+          {screenLoader && <WishlistSkeleton />}
+          {wishlistData.length > 0 &&
+            wishlistData.map((item, index) => (
+              <OrderContainer key={index}>
+                <Info>
+                  <Product>
+                    <ProductDetail>
+                      <Image src={item.image} />
+                      <Details>
+                        <Link
+                          to={`/product/${item._id}`}
+                          style={{ textDecoration: "none", color: "black" }}
+                        >
+                          <ProductName>{item.title}</ProductName>
+                        </Link>
+                      </Details>
+                    </ProductDetail>
+                  </Product>
+                </Info>
+                <Divider sx={{ color: "gray" }}></Divider>
+              </OrderContainer>
+            ))}
         </Bottom>
       </Wrapper>
-      <ScreenLoader open={screenLoader} />
     </Container>
   );
 };

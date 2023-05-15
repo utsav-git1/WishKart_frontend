@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CategoryItem from "./CategoryItem";
 import { publicRequest } from "../requestMethods";
+import CategoriesSkeleton from "../utils/SkeletonLoaders/CategoriesSkeleton";
 
 const Container = styled.div`
   display: flex;
@@ -11,13 +12,17 @@ const Container = styled.div`
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const [screenLoader, setScreenLoader] = useState(true);
+
   useEffect(() => {
     const getCategories = async (req, res) => {
       try {
         const res = await publicRequest.get("/category");
         setCategories(res.data);
+        setScreenLoader(false);
       } catch (err) {
         console.log(err);
+        setScreenLoader(false);
       }
     };
     getCategories();
@@ -25,9 +30,11 @@ const Categories = () => {
 
   return (
     <Container>
-      {categories.map((category, index) => (
-        <CategoryItem data={category} key={index} />
-      ))}
+      {screenLoader
+        ? Array(3).fill(<CategoriesSkeleton />)
+        : categories.map((category, index) => (
+            <CategoryItem data={category} key={index} />
+          ))}
     </Container>
   );
 };
