@@ -6,6 +6,7 @@ import { publicRequest } from "../requestMethods";
 import { useDispatch } from "react-redux";
 import { setFilterData } from "../redux/FilterData";
 import ScreenLoader from "../utils/ScreenLoader";
+import ProductListSkeleton from "../utils/SkeletonLoaders/ProductListSkeleton";
 
 const Container = styled.div`
   display: flex;
@@ -52,7 +53,6 @@ const Products = ({ category, filters, sort }) => {
         setProducts(res.data);
         setScreenLoader(false);
       } catch (err) {
-        console.log(err);
         setScreenLoader(false);
       }
     };
@@ -103,33 +103,38 @@ const Products = ({ category, filters, sort }) => {
     dispatch(setFilterData(productFilterData));
   }, [productFilterData]);
 
-  return products.length === 0 ? (
+  return (
     <>
-      <FullScreenContainer message={`Oops No Search Results for ${category}`} />
-      <ScreenLoader open={screenLoader} />
-    </>
-  ) : (
-    <Container>
-      <GridContainer>
-        {category
-          ? filteredProducts.map((product, index) => (
-              <ProductTile key={index}>
-                <Product key={product.key} product={product} />
-              </ProductTile>
-            ))
-          : products.slice(0, 4).map((product, index) => (
-              <ProductTile key={index}>
-                <Product key={product.key} product={product} />
-              </ProductTile>
-            ))}
+      {screenLoader && <ProductListSkeleton />}
+      {products.length === 0 && !screenLoader ? (
+        <FullScreenContainer
+          message={`Oops No Search Results for ${category ?? "Products"}`}
+        />
+      ) : (
+        <Container>
+          <GridContainer>
+            {category
+              ? filteredProducts.map((product, index) => (
+                  <ProductTile key={index}>
+                    <Product key={product.key} product={product} />
+                  </ProductTile>
+                ))
+              : products.slice(0, 4).map((product, index) => (
+                  <ProductTile key={index}>
+                    <Product key={product.key} product={product} />
+                  </ProductTile>
+                ))}
 
-        {category && filteredProducts.length === 0 && (
-          <FullScreenContainer
-            message={`Oops No Search Results for Applied Filters!`}
-          />
-        )}
-      </GridContainer>
-    </Container>
+            {category && filteredProducts.length === 0 && !screenLoader && (
+              <FullScreenContainer
+                message={`Oops No Search Results for Applied Filters!`}
+              />
+            )}
+          </GridContainer>
+        </Container>
+      )}
+      ;
+    </>
   );
 };
 

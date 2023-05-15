@@ -6,6 +6,7 @@ import { removeProduct, modifyProductQuantity } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import Divider from "@mui/material/Divider";
 import ScreenLoader from "../utils/ScreenLoader";
+import OrderSkeleton from "../utils/SkeletonLoaders/OrderSkeleton";
 
 const Container = styled.div``;
 
@@ -140,46 +141,47 @@ const Order = () => {
           <TopButton onClick={getOrderList}>All Orders</TopButton>
         </Top>
         <Bottom>
-          {orderData.map((order, index) => (
-            <OrderContainer key={index}>
-              <Info>
-                <Top>
-                  <TopText>Order Id: {order._id}</TopText>
-                  {order.createdAt && (
-                    <TopText>
-                       Date: {new Date(order.createdAt).getDate()}/
-                      {new Date(order.createdAt).getMonth() + 1}/
-                      {new Date(order.createdAt).getFullYear()}
-                    </TopText>
-                  )}
-                </Top>
-                {order.products.map((product, index) => (
-                  <Product key={index}>
-                    <ProductDetail>
-                      <Image src={product.image} />
-                      <Details>
-                        <ProductName>{product.title}</ProductName>
-                        <ProductColor color={product.color} />
-                        <ProductSize>Size:{product.size}</ProductSize>
-                      </Details>
-                    </ProductDetail>
-                    <PriceDetail>
-                      <ProductAmountContainer>
-                        <ProductAmount>Qty: {product.amount}</ProductAmount>
-                      </ProductAmountContainer>
-                      <ProductPrice>
-                        Price: {product.price * product.amount}$
-                      </ProductPrice>
-                    </PriceDetail>
-                  </Product>
-                ))}
-              </Info>
-              <Divider sx={{ color: "gray" }}></Divider>
-            </OrderContainer>
-          ))}
+          {screenLoader && <OrderSkeleton />}
+          {orderData.length > 0 &&
+            orderData.map((order, index) => (
+              <OrderContainer key={index}>
+                <Info>
+                  <Top>
+                    <TopText>Order Id: {order._id}</TopText>
+                    {order.createdAt && (
+                      <TopText>
+                        Date: {new Date(order.createdAt).getDate()}/
+                        {new Date(order.createdAt).getMonth() + 1}/
+                        {new Date(order.createdAt).getFullYear()}
+                      </TopText>
+                    )}
+                  </Top>
+                  {order.products.map((product, index) => (
+                    <Product key={index}>
+                      <ProductDetail>
+                        <Image src={product.image} />
+                        <Details>
+                          <ProductName>{product.title}</ProductName>
+                          <ProductColor color={product.color} />
+                          <ProductSize>Size:{product.size}</ProductSize>
+                        </Details>
+                      </ProductDetail>
+                      <PriceDetail>
+                        <ProductAmountContainer>
+                          <ProductAmount>Qty: {product.amount}</ProductAmount>
+                        </ProductAmountContainer>
+                        <ProductPrice>
+                          Price: {product.price * product.amount}$
+                        </ProductPrice>
+                      </PriceDetail>
+                    </Product>
+                  ))}
+                </Info>
+                <Divider sx={{ color: "gray" }}></Divider>
+              </OrderContainer>
+            ))}
         </Bottom>
       </Wrapper>
-      <ScreenLoader open={screenLoader} />
     </Container>
   );
 };

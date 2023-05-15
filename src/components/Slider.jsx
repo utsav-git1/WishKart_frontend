@@ -5,6 +5,8 @@ import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { publicRequest } from "../requestMethods";
 import { Link } from "react-router-dom";
 import ScreenLoader from "../utils/ScreenLoader";
+import SliderSkeleton from "../utils/SkeletonLoaders/SliderSkeleton";
+import FullScreenContainer from "../utils/FullScreenContainer";
 
 const Container = styled.div`
   width: 100%;
@@ -16,7 +18,6 @@ const Container = styled.div`
   @media screen and (min-width: 300px) and (max-width: 750px) {
     width: 200%;
   }
-  
 `;
 
 const Arrow = styled.div`
@@ -95,6 +96,8 @@ const Slider = () => {
   const [slide, setSlide] = useState(0);
   const [data, setData] = useState([]);
   const [screenLoader, setScreenLoader] = useState(true);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const handleClick = (direction) => {
     if (direction === "left") setSlide(slide > 0 ? slide - 1 : 2);
@@ -111,47 +114,55 @@ const Slider = () => {
             : await publicRequest.get("/category");
         setData(response.data);
         setScreenLoader(false);
+        response.data.length === 0 &&
+          setError(true) &&
+          setMessage("No Results for this category");
       } catch (err) {
-        console.log(err);
         setScreenLoader(false);
+        setError(true);
+        setMessage("An Error Occured. Please Try Again Later!");
       }
     };
     getSliderData();
   }, []);
 
-  useEffect(() => {
-    data.length === 0 ? setScreenLoader(true) : setScreenLoader(false);
-  }, [data]);
-
   return (
     <>
-      <Container>
-        <Wrapper slide={slide}>
-          {data.slice(0, 3).map((data, index) => (
-            <Slide bg="white" key={index}>
-              <ImageContainer>
-                <Image src={data?.image} />
-              </ImageContainer>
-              <InfoContainer>
-                <Title>{data?.title} Sale !!!</Title>
-                <Description>{data?.description} sale is live</Description>
-                <Link
-                  to={`/products/${data?.categories?.[0] ?? data?.category}`}
-                >
-                  <Button>Shop Now</Button>
-                </Link>
-              </InfoContainer>
-            </Slide>
-          ))}
-        </Wrapper>
-        <Arrow direction="left" onClick={() => handleClick("left")}>
-          <ArrowLeftOutlinedIcon />
-        </Arrow>
-        <Arrow direction="right" onClick={() => handleClick("right")}>
-          <ArrowRightOutlinedIcon />
-        </Arrow>
-      </Container>
-      <ScreenLoader open={screenLoader} />
+      {screenLoader && <SliderSkeleton />}
+      {error ? (
+        <FullScreenContainer message={message} />
+      ) : (
+        data.length > 0 && (
+          <Container>
+            <Wrapper slide={slide}>
+              {data.slice(0, 3).map((data, index) => (
+                <Slide bg="white" key={index}>
+                  <ImageContainer>
+                    <Image src={data?.image} />
+                  </ImageContainer>
+                  <InfoContainer>
+                    <Title>{data?.title} Sale !!!</Title>
+                    <Description>{data?.description} sale is live</Description>
+                    <Link
+                      to={`/products/${
+                        data?.categories?.[0] ?? data?.category
+                      }`}
+                    >
+                      <Button>Shop Now</Button>
+                    </Link>
+                  </InfoContainer>
+                </Slide>
+              ))}
+            </Wrapper>
+            <Arrow direction="left" onClick={() => handleClick("left")}>
+              <ArrowLeftOutlinedIcon />
+            </Arrow>
+            <Arrow direction="right" onClick={() => handleClick("right")}>
+              <ArrowRightOutlinedIcon />
+            </Arrow>
+          </Container>
+        )
+      )}
     </>
   );
 };

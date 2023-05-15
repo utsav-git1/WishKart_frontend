@@ -14,7 +14,7 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.6)
     ),
     url("../../public/logo.jpg");
-
+  background-size: contain;
   display: flex;
   align-items: center;
   justify-content: center;
