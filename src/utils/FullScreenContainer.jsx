@@ -24,7 +24,7 @@ const Message = styled.div`
 const FullScreenContainer = ({ message }) => {
   return (
     <Container>
-      <Message>{message}</Message>;
+      <Message>{message}</Message>
     </Container>
   );
 };
