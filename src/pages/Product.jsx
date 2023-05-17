@@ -158,9 +158,9 @@ const Product = () => {
       try {
         const res = await publicRequest.get(`/products/find/${id}`);
         setProduct(res.data);
-        setScreenLoader(false)
+        setScreenLoader(false);
       } catch (err) {
-        setScreenLoader(false)
+        setScreenLoader(false);
         console.log(err);
       }
     };
@@ -241,64 +241,67 @@ const Product = () => {
 
   return (
     <>
-      {screenLoader && <ProductSkeleton />}
       <Container>
         <Navbar />
-        <Wrapper>
-          <ImageContainer>
-            <Image src={product.image} />
-          </ImageContainer>
-          <InfoContainer>
-            <Title>{product.title}</Title>
-            <Description>{product.description}</Description>
-            <Price>Price: {product.price} $</Price>
-            <FilterContainer>
-              <Filter>
-                <FilterTitle>Color:</FilterTitle>
-                {product.color?.map((item) => (
-                  <FilterColor
-                    color={item}
-                    selected={color}
-                    onClick={() => setColor(item)}
-                  />
-                ))}
-              </Filter>
-              <Filter>
-                <FilterTitle>Size</FilterTitle>
-                <FilterSize onChange={(event) => setSize(event.target.value)}>
-                  <FilterSizeOption disabled selected>
-                    Size
-                  </FilterSizeOption>
-                  {product.size?.map((item) => (
-                    <FilterSizeOption value={item}>{item}</FilterSizeOption>
+        {screenLoader ? (
+          <ProductSkeleton />
+        ) : (
+          <Wrapper>
+            <ImageContainer>
+              <Image src={product.image} />
+            </ImageContainer>
+            <InfoContainer>
+              <Title>{product.title}</Title>
+              <Description>{product.description}</Description>
+              <Price>Price: {product.price} $</Price>
+              <FilterContainer>
+                <Filter>
+                  <FilterTitle>Color:</FilterTitle>
+                  {product.color?.map((item) => (
+                    <FilterColor
+                      color={item}
+                      selected={color}
+                      onClick={() => setColor(item)}
+                    />
                   ))}
-                </FilterSize>
-              </Filter>
-              <Filter>
-                {wishlist.products?.includes(product._id) ? (
-                  <FavoriteOutlinedIcon
-                    onClick={() => handleRemoveItem(product._id)}
-                    sx={{ color: "red" }}
-                  />
-                ) : (
-                  <FavoriteBorderOutlinedIcon
-                    onClick={() => handleAddItem(product._id)}
-                  />
-                )}
-              </Filter>
-            </FilterContainer>
-            <AddContainer>
-              <AmountContainer>
-                {amount > 1 && (
-                  <Remove onClick={() => setAmount((prev) => prev - 1)} />
-                )}
-                <Amount>{amount}</Amount>
-                <Add onClick={() => setAmount((prev) => prev + 1)} />
-              </AmountContainer>
-              <Button onClick={handleClick}>Add To Cart</Button>
-            </AddContainer>
-          </InfoContainer>
-        </Wrapper>
+                </Filter>
+                <Filter>
+                  <FilterTitle>Size</FilterTitle>
+                  <FilterSize onChange={(event) => setSize(event.target.value)}>
+                    <FilterSizeOption disabled selected>
+                      Size
+                    </FilterSizeOption>
+                    {product.size?.map((item) => (
+                      <FilterSizeOption value={item}>{item}</FilterSizeOption>
+                    ))}
+                  </FilterSize>
+                </Filter>
+                <Filter>
+                  {wishlist.products?.includes(product._id) ? (
+                    <FavoriteOutlinedIcon
+                      onClick={() => handleRemoveItem(product._id)}
+                      sx={{ color: "red" }}
+                    />
+                  ) : (
+                    <FavoriteBorderOutlinedIcon
+                      onClick={() => handleAddItem(product._id)}
+                    />
+                  )}
+                </Filter>
+              </FilterContainer>
+              <AddContainer>
+                <AmountContainer>
+                  {amount > 1 && (
+                    <Remove onClick={() => setAmount((prev) => prev - 1)} />
+                  )}
+                  <Amount>{amount}</Amount>
+                  <Add onClick={() => setAmount((prev) => prev + 1)} />
+                </AmountContainer>
+                <Button onClick={handleClick}>Add To Cart</Button>
+              </AddContainer>
+            </InfoContainer>
+          </Wrapper>
+        )}
         {warning && <AlertDialog setWarning={setWarning} message={message} />}
       </Container>
     </>
