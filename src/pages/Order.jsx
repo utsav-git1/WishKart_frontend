@@ -148,6 +148,7 @@ const Order = () => {
                 <Info>
                   <Top>
                     <TopText>Order Id: {order._id}</TopText>
+                    <TopText>Amount: {order?.amount}$</TopText>
                     {order.createdAt && (
                       <TopText>
                         Date: {new Date(order.createdAt).getDate()}/

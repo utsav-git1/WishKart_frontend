@@ -11,6 +11,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@esbuild/win32-x64": "^0.17.19",
     "@mui/icons-material": "^5.11.16",
     "@mui/lab": "^5.0.0-alpha.128",
     "@mui/material": "^5.12.2",
@@ -20,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
+    "react-stripe-checkout": "^2.6.3",
     "redux-toolkit": "^1.1.2",
     "styled-components": "^5.3.9"
   },
@@ -27,6 +29,7 @@
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^3.1.0",
+    "react-error-overlay": "^6.0.9",
     "vite": "^4.2.0"
   }
 }

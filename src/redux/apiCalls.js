@@ -1,5 +1,6 @@
 import { publicRequest } from "../requestMethods";
 import { loginFailure, loginStart, loginSuccess } from "./userRedux";
+import { emptyCart } from "./cartRedux";
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
@@ -48,6 +49,27 @@ export const saveCart = async (cart, user) => {
         },
       }
     );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const placeOrder = async (cart, user, paymentId, dispatch) => {
+  let cartData = {
+    products: cart.products,
+    amount: cart.total,
+    userId: user?.user._id,
+    paymentId: paymentId,
+  };
+  try {
+    const res = await publicRequest.post("/order", cartData, {
+      headers: {
+        token: `Bearer ${user.accessToken}`,
+      },
+    });
+    setTimeout(() => {
+      dispatch(emptyCart({ id: cart.id }));
+    }, 3000);
   } catch (err) {
     console.log(err);
   }
