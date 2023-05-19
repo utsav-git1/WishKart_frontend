@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,13 +16,13 @@ const Container = styled.div`
       rgba(255, 255, 255, 0.6),
       rgba(255, 255, 255, 0.6)
     ),
-    url("../../public/logo.jpg");
+    url("../../logo.jpg");
   background-size: contain;
 `;
 
 const PaymentContainer = styled.div`
-  height: 50vh;
-  width: 25vw;
+  height: 50%;
+  width: 25%;
   border: solid 1px lightgray;
   border-radius: 5px;
   display: flex;
@@ -34,6 +35,7 @@ const Header = styled.h1`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-weight: 600;
   font-style: italic;
+  font-size: 1.8rem;
 `;
 
 const KEY =
@@ -85,7 +87,7 @@ const Payments = () => {
         <Header>Payment Methods</Header>
         <StripeCheckout
           name="WishKart"
-          image="../../public/logo.jpg"
+          image="../../logo.jpg"
           billingAddress
           shippingAddress
           description={`Your Order Amount is ${cart.total} $`}

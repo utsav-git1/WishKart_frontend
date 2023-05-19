@@ -27,7 +27,7 @@ const PaymentSuccess = () => {
       <Link to="/order">
         <Button>Show Orders</Button>
       </Link>
-      <FullScreenContainer message={`Your Order is Succefully Placed!`} />
+      <FullScreenContainer message={`Your Order is Successfully Placed!`} />
     </Container>
   );
 };
