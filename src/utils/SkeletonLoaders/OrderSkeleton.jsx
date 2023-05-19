@@ -12,10 +12,10 @@ const skeletonAnimation = keyframes`
 `;
 
 const Container = styled.div`
-  height: 50vh;
-  width: 30vw;
+  height: 42vh;
+  width: 22vw;
   margin-bottom: 100px;
-  margin-left: 100px;
+  margin-left: 10px;
 `;
 
 const ProductInfo = styled.div`
@@ -26,8 +26,8 @@ const ProductTile = styled.div`
   height: 100%;
   width: 50%;
   margin: 30px;
-  min-height: 400px;
-  min-width: 300px;
+  min-height: 220px;
+  min-width: 170px;
   border-radius: 10px;
   animation: ${skeletonAnimation} 1s linear infinite alternate;
 `;

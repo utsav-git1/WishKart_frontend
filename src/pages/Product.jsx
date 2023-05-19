@@ -11,8 +11,17 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import { addItem, removeItem } from "../redux/wishlistRedux";
 import { saveWishlist } from "../redux/apiCalls";
+import ProductSkeleton from "../utils/SkeletonLoaders/ProductSkeleton";
 
-const Container = styled.div``;
+const Container = styled.div`
+  @media screen and (min-width: 100px) and (max-width: 780px) {
+    height: 400px;
+    width: 600px;
+  }
+
+  height: 50vh;
+  width: 50vw;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -84,6 +93,7 @@ const FilterColor = styled.div`
 
 const FilterSize = styled.select`
   padding: 3%;
+  margin: 2%;
 `;
 
 const FilterSizeOption = styled.option``;
@@ -139,6 +149,7 @@ const Product = () => {
   const cart = useSelector((state) => state.cart);
   const user = useSelector((state) => state.user.currentUser);
   const wishlist = useSelector((state) => state.wishlist);
+  const [screenLoader, setScreenLoader] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -147,7 +158,9 @@ const Product = () => {
       try {
         const res = await publicRequest.get(`/products/find/${id}`);
         setProduct(res.data);
+        setScreenLoader(false);
       } catch (err) {
+        setScreenLoader(false);
         console.log(err);
       }
     };
@@ -227,65 +240,71 @@ const Product = () => {
   }, [wishlist]);
 
   return (
-    <Container>
-      <Navbar />
-      <Wrapper>
-        <ImageContainer>
-          <Image src={product.image} />
-        </ImageContainer>
-        <InfoContainer>
-          <Title>{product.title}</Title>
-          <Description>{product.description}</Description>
-          <Price>Price: {product.price} $</Price>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color:</FilterTitle>
-              {product.color?.map((item) => (
-                <FilterColor
-                  color={item}
-                  selected={color}
-                  onClick={() => setColor(item)}
-                />
-              ))}
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize onChange={(event) => setSize(event.target.value)}>
-                <FilterSizeOption disabled selected>
-                  Size
-                </FilterSizeOption>
-                {product.size?.map((item) => (
-                  <FilterSizeOption value={item}>{item}</FilterSizeOption>
-                ))}
-              </FilterSize>
-            </Filter>
-            <Filter>
-              {wishlist.products?.includes(product._id) ? (
-                <FavoriteOutlinedIcon
-                  onClick={() => handleRemoveItem(product._id)}
-                  sx={{ color: "red" }}
-                />
-              ) : (
-                <FavoriteBorderOutlinedIcon
-                  onClick={() => handleAddItem(product._id)}
-                />
-              )}
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <AmountContainer>
-              {amount > 1 && (
-                <Remove onClick={() => setAmount((prev) => prev - 1)} />
-              )}
-              <Amount>{amount}</Amount>
-              <Add onClick={() => setAmount((prev) => prev + 1)} />
-            </AmountContainer>
-            <Button onClick={handleClick}>Add To Cart</Button>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
-      {warning && <AlertDialog setWarning={setWarning} message={message} />}
-    </Container>
+    <>
+      <Container>
+        <Navbar />
+        {screenLoader ? (
+          <ProductSkeleton />
+        ) : (
+          <Wrapper>
+            <ImageContainer>
+              <Image src={product.image} />
+            </ImageContainer>
+            <InfoContainer>
+              <Title>{product.title}</Title>
+              <Description>{product.description}</Description>
+              <Price>Price: {product.price} $</Price>
+              <FilterContainer>
+                <Filter>
+                  <FilterTitle>Color:</FilterTitle>
+                  {product.color?.map((item) => (
+                    <FilterColor
+                      color={item}
+                      selected={color}
+                      onClick={() => setColor(item)}
+                    />
+                  ))}
+                </Filter>
+                <Filter>
+                  <FilterTitle>Size</FilterTitle>
+                  <FilterSize onChange={(event) => setSize(event.target.value)}>
+                    <FilterSizeOption disabled selected>
+                      Size
+                    </FilterSizeOption>
+                    {product.size?.map((item) => (
+                      <FilterSizeOption value={item}>{item}</FilterSizeOption>
+                    ))}
+                  </FilterSize>
+                </Filter>
+                <Filter>
+                  {wishlist.products?.includes(product._id) ? (
+                    <FavoriteOutlinedIcon
+                      onClick={() => handleRemoveItem(product._id)}
+                      sx={{ color: "red" }}
+                    />
+                  ) : (
+                    <FavoriteBorderOutlinedIcon
+                      onClick={() => handleAddItem(product._id)}
+                    />
+                  )}
+                </Filter>
+              </FilterContainer>
+              <AddContainer>
+                <AmountContainer>
+                  {amount > 1 && (
+                    <Remove onClick={() => setAmount((prev) => prev - 1)} />
+                  )}
+                  <Amount>{amount}</Amount>
+                  <Add onClick={() => setAmount((prev) => prev + 1)} />
+                </AmountContainer>
+                <Button onClick={handleClick}>Add To Cart</Button>
+              </AddContainer>
+            </InfoContainer>
+          </Wrapper>
+        )}
+        {warning && <AlertDialog setWarning={setWarning} message={message} />}
+      </Container>
+    </>
   );
 };
 
