@@ -67,9 +67,6 @@ export const placeOrder = async (cart, user, paymentId, dispatch) => {
         token: `Bearer ${user.accessToken}`,
       },
     });
-    setTimeout(() => {
-      dispatch(emptyCart({ id: cart.id }));
-    }, 3000);
   } catch (err) {
     console.log(err);
   }
