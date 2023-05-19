@@ -120,6 +120,10 @@ const Cart = () => {
   const [successFlag, setSuccessFlag] = useState(false);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    user && cart.id && saveCart(cart, user);
+  }, [cart]);
+
   const handleDelete = (index, product) => {
     let id = product._id;
     let total = product.price * product.amount;
@@ -133,43 +137,6 @@ const Cart = () => {
       : dispatch(modifyProductQuantity({ index, id, type }));
   };
 
-  const handleOrder = () => {
-    let cartData = {
-      products: cart.products,
-      amount: cart.total,
-      userId: user?.user._id,
-    };
-
-    const placeOrder = async (cartData) => {
-      try {
-        const res = await publicRequest.post("/order", cartData, {
-          headers: {
-            token: `Bearer ${user.accessToken}`,
-          },
-        });
-        setTimeout(() => {
-          dispatch(emptyCart({ id: cart.id }));
-        }, 3000);
-        setScreenLoader(false);
-      } catch (err) {
-        console.log(err);
-        setScreenLoader(false);
-      }
-    };
-
-    placeOrder(cartData);
-    setScreenLoader(true);
-    setTimeout(() => {
-      setMessage("Congratulations! Your Order is Successfully placed");
-      setScreenLoader(false);
-      setSuccessFlag(true);
-    }, 3000);
-  };
-
-  useEffect(() => {
-    user && cart.id && saveCart(cart, user);
-  }, [cart]);
-
   return (
     <Container>
       <Navbar />
@@ -180,7 +147,9 @@ const Cart = () => {
             <TopButton>Continue Shopping!</TopButton>
           </Link>
           {cart?.products.length > 0 && (
-            <TopButton onClick={handleOrder}>Place Order</TopButton>
+            <Link to="/payments">
+              <TopButton>Place Order</TopButton>
+            </Link>
           )}
         </Top>
         {cart?.products.length > 0 ? (

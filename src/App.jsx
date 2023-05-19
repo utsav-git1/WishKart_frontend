@@ -16,6 +16,8 @@ import Login from "./pages/Login";
 import { useSelector } from "react-redux";
 import Order from "./pages/Order";
 import Wishlist from "./pages/Wishlist";
+import Payments from "./pages/Payments";
+import PaymentSuccess from "./pages/PaymentSuccess";
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -34,6 +36,8 @@ function App() {
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/order" element={<Order />} />
         <Route exact path="/wishlist" element={<Wishlist />} />
+        <Route exact path="/payments" element={<Payments />} />
+        <Route exact path="/success" element={<PaymentSuccess />} />
       </Routes>
     </Router>
   );
