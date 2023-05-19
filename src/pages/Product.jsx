@@ -20,7 +20,7 @@ const Container = styled.div`
   }
 
   height: 50vh;
-  width: 50vw;
+  width: 100vw;
 `;
 
 const Wrapper = styled.div`
