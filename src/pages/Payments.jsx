@@ -72,7 +72,6 @@ const Payments = () => {
   }, [stripeToken]);
 
   useEffect(() => {
-    console.log(payment);
     payment && naviate("/success", { replace: true });
   }, [payment]);
 
