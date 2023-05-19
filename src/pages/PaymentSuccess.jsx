@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import FullScreenContainer from "./../utils/FullScreenContainer";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { emptyCart } from "../redux/cartRedux";
+import { saveCart } from "../redux/apiCalls";
 
 const Container = styled.div`
   height: 100vh;
@@ -22,6 +25,20 @@ const Button = styled.button`
 `;
 
 const PaymentSuccess = () => {
+  const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(emptyCart({ id: cart.id }));
+  }, []);
+
+  useEffect(() => {
+    saveCart(cart, user);
+  }, [cart]);
+
+  console.log(cart);
+
   return (
     <Container>
       <Link to="/order">
