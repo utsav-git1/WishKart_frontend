@@ -38,6 +38,11 @@ const Header = styled.h1`
   font-size: 1.8rem;
 `;
 
+const Note = styled.h2`
+  font-size: large;
+  color: red;
+`;
+
 const KEY =
   "pk_test_51N8n8sSGFTtsP6miEOV6c3a7sMchrR3vqOh3OtxhPYspY0nc3VpY2NxOfQftwCH1gj2SeOf4eeckaySbsYl3zpd300qysyNaZq";
 
@@ -82,21 +87,33 @@ const Payments = () => {
   };
 
   return (
-    <Container>
-      <PaymentContainer>
-        <Header>Payment Methods</Header>
-        <StripeCheckout
-          name="WishKart"
-          image="../../logo.jpg"
-          billingAddress
-          shippingAddress
-          description={`Your Order Amount is ${cart.total} $`}
-          amount={cart.total * 100}
-          token={token}
-          stripeKey={KEY}
-        ></StripeCheckout>
-      </PaymentContainer>
-    </Container>
+    <>
+      <Container>
+        <PaymentContainer>
+          <Header>Payment Methods</Header>
+          <StripeCheckout
+            name="WishKart"
+            image="../../logo.jpg"
+            billingAddress
+            shippingAddress
+            description={`Your Order Amount is ${cart.total} $`}
+            amount={cart.total * 100}
+            token={token}
+            stripeKey={KEY}
+          ></StripeCheckout>
+        </PaymentContainer>
+      </Container>
+
+      <Note>
+        Warning!
+        <br/> This payment portal is under developmental progress.
+        <br />
+        DO NOT use your original debit/credit card / bank details.
+        <br />
+        Any financial losses are not covered by the author of this
+        website-WishKart.
+      </Note>
+    </>
   );
 };
 
