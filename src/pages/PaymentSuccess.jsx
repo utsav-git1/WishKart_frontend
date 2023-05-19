@@ -37,8 +37,6 @@ const PaymentSuccess = () => {
     saveCart(cart, user);
   }, [cart]);
 
-  console.log(cart);
-
   return (
     <Container>
       <Link to="/order">

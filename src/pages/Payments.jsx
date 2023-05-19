@@ -35,7 +35,7 @@ const Header = styled.h1`
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-weight: 600;
   font-style: italic;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
 `;
 
 const Note = styled.h2`
